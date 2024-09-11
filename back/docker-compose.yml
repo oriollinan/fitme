@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  dev-db:
+    image: postgres:13
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_HOST_AUTH_METHOD: md5
+    networks:
+      - fitness-back
+    volumes:
+      - data:/var/lib/postgresql/data
+    restart: always
+    container_name: fit-me-db
+
+  api:
+    build: .
+    depends_on:
+      - dev-db
+    environment:
+      DATABASE_DOCKER: ${DATABASE_DOCKER}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - 3030:3030
+    networks:
+      - fitness-back
+    restart: always
+
+
+volumes:
+  data:
+    driver: local
+
+networks:
+  fitness-back:

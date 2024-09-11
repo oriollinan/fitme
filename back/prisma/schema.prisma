@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  password      String
+  name          String
+  height        Float?
+  weight        Float?
+  body_fat      Float?
+  muscle_mass   Float?
+  workout_plans WorkoutPlan[]
+}
+
+model Exercise {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  bodyPart    BodyPart @relation(fields: [bodyPartId], references: [id])
+  bodyPartId  Int
+  sets        Set[]
+}
+
+model WorkoutPlan {
+  id          Int           @id @default(autoincrement())
+  name        String
+  date        DateTime      @default(now())
+  user        User          @relation(fields: [userId], references: [id])
+  userId      Int
+  Workout_Set Workout_Set[]
+  Set         Set[]
+}
+
+model Set {
+  id          Int           @id @default(autoincrement())
+  reps        Int
+  weight      Float
+  date        DateTime
+  exercise    Exercise      @relation(fields: [exerciseId], references: [id])
+  exerciseId  Int
+  workout     WorkoutPlan   @relation(fields: [workoutId], references: [id])
+  workoutId   Int
+  Workout_Set Workout_Set[]
+}
+
+model BodyPart {
+  id        Int        @id @default(autoincrement())
+  name      String
+  exercises Exercise[]
+}
+
+// Pivot table to connect WorkoutPlan and Set models
+model Workout_Set {
+  id            Int         @id @default(autoincrement())
+  workoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id])
+  workoutPlanId Int
+  set           Set         @relation(fields: [setId], references: [id])
+  setId         Int
+}

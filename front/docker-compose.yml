@@ -1,0 +1,8 @@
+version: '3'
+services:
+  flutter-dev:
+    build: .
+    ports:
+      - "5000:5000"
+    command: flutter doctor
+    container_name: flutter

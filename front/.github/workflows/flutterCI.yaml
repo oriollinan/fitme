@@ -1,0 +1,31 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ master, DevOps-Dev-Container ]
+  pull_request:
+    branches: [ master, DevOps-Dev-Container ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        channel: "stable"  # Update this to the Flutter channel you want to use
+    - name: Get dependencies
+      run: cd workspace && flutter pub get
+    - name: Analyze code
+      run: cd workspace || flutter analyze
+    # - name: Run tests
+    #   run: flutter test
+    - name: Build APK
+      run: cd workspace || flutter build apk
+      # You can use flutter build ios to build for iOS
+      # Update the build command arguments based on your requirements
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release
+        path: build/app/outputs/flutter-apk/app-release.apk

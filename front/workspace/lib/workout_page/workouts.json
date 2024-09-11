@@ -1,0 +1,49 @@
+{
+  "workouts": [
+    {
+      "id": 1,
+      "name": "Workout01 Test",
+      "date": "2023-03-25T17:29:57.231Z",
+      "Set": [
+        {
+          "id": 2,
+          "reps": 8,
+          "weight": 70,
+          "date": "2023-03-25T17:29:57.231Z",
+          "exerciseId": 1,
+          "workoutId": 1
+        },
+        {
+          "id": 3,
+          "reps": 6,
+          "weight": 80,
+          "date": "2023-03-25T17:29:57.231Z",
+          "exerciseId": 1,
+          "workoutId": 1
+        },
+        {
+          "id": 4,
+          "reps": 6,
+          "weight": 80,
+          "date": "2023-03-25T17:29:57.231Z",
+          "exerciseId": 1,
+          "workoutId": 1
+        },
+        {
+          "id": 1,
+          "reps": 12,
+          "weight": 70,
+          "date": "2023-03-25T17:29:57.231Z",
+          "exerciseId": 2,
+          "workoutId": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Workout02 Test",
+      "date": "2023-03-26T15:17:50.737Z",
+      "Set": []
+    }
+  ]
+}
